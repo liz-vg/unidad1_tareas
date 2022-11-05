@@ -1,0 +1,5 @@
+{"id":1, "titulo": "Del Amor y otros Demonios", "genero":"novela", "isbn":9788497592420, "editorial": "Debolsillo", "autor": "Garcia Marquez"}
+{"id":2, "titulo": "El Codigo Da Vinci", "genero":"Accion, Misterio", "isbn":9788408096146, "editorial": "Planeta", "autor": " Dan Brown"}
+{"id":3, "titulo": "El Conde de Montecristo", "genero":"Ficción, Novela", "isbn":9788494277863, "editorial": "Hispanomerica", "autor": "Alejandro Dumas"}
+{"id":4, "titulo": "La Ultima Respuesta", "genero":"Novela", "isbn":9788499085739, "editorial": "Debolsillo", "autor": " Álex Rovira, Francesc Miralles"}
+{"id":5, "titulo": "Sherlock Holmes", "genero":"Novelas, Relatos", "isbn":9788420665726, "editorial": "Alianza Editorial", "autor": "Arthur Conan "}
