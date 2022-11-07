@@ -83,17 +83,60 @@ class Pokemon2:
     for poke in pokemons_in_ability:
         pokemon.set_nombre(poke)
         pokemon.info()
+
+  def habitat(self):
+    pokemon=Pokemon()
+    
+    response = requests.get("https://pokeapi.co/api/v2/pokemon-habitat/")
+    data = response.json()
+    habitat = [item['name'] for item in data ['results']]  
+    print("You can select from:\n", habitat)
+    
+    habitat=input("Type shape :").lower()
+    url: str = "https://pokeapi.co/api/v2/pokemon-habitat/" + habitat
+    
+    data=extract_json(url)
+     
+    pokemons_in_habitat=[item['name'] for item in data['pokemon_species']]
+    for poke in pokemons_in_habitat:
+        pokemon.set_nombre(poke)
+        pokemon.info()
+
+  def type(self):
+    pokemon=Pokemon()
+    
+    response = requests.get("https://pokeapi.co/api/v2/type/")
+    data = response.json()
+    type = [item['name'] for item in data ['results']]  
+    print("You can select from:\n", type)
+    
+    type=input("Type shape :").lower()
+    url: str = "https://pokeapi.co/api/v2/type/" + type
+    
+    data=extract_json(url)
+     
+    pokemons_in_type=[item['pokemon']['name'] for item in data['pokemon']]
+    for poke in pokemons_in_type:
+        pokemon.set_nombre(poke)
+        pokemon.info()
       
+
+def inicio():
   
-run = Pokemon2()
-
-choice = input(
-  "Select how you want to sort the pokemon (generation, shape, ability, habitat, type): "
+  run = Pokemon2()
+  
+  choice = input(
+    "Select how you want to sort the pokemon (generation, shape, ability, habitat, type): "
   )
-
-if choice == "generation":
-  run.generation()
-elif choice == "shape":
-  run.shape()
-elif choice == "ability":
-  run.ability()
+  if choice == "generation":
+    run.generation()
+  elif choice == "shape":
+    run.shape()
+  elif choice == "ability":
+    run.ability()
+  elif choice == "habitat":
+    run.habitat()
+  elif choice == "type":
+    run.type()
+  else: print ("Incorrect command")
+inicio()
