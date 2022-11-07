@@ -120,3 +120,106 @@ while True:
       else:
         print("¡Libro no encontrado!\n")
         continuar = input("Desea continuar? Si/No: ").lower()        
+    break
+  elif seleccion == '6':
+    print("\nTítulos ordenados de forma alfabética:")
+    libros = cargarLibros("libros.txt")
+    ordenado = []
+    for libro in libros:
+      ordenado.append(libro.get("titulo"))
+    ordenado.sort()
+    for titulo in ordenado:
+      print (titulo)
+    break
+  elif seleccion == '7':
+    opciones = f"""{'#'*22}
+Realizar búsqueda por:
+a) autor.
+b) editorial.
+c) género.
+{'#'*22}"""
+    continuar = "si"
+    while continuar == "si":
+      print(opciones)
+      tipoBusqueda = input("Ingrese su opción: ").lower()
+      while tipoBusqueda not in {"a", "b", "c"}:
+        tipoBusqueda = input("Opción incorrecta, Vuelva a intentarlo: ").lower()
+      if tipoBusqueda == "a":
+        tipoBusqueda = "autor"
+      elif tipoBusqueda == "b":
+        tipoBusqueda = "editorial"
+      elif tipoBusqueda == "c":
+        tipoBusqueda = "genero"
+      buscar = input(f"Ingrese {tipoBusqueda} del libro a buscar: ")
+      libros = cargarLibros("libros.txt")
+      existencia = 0
+      for libro in libros:
+        if str(libro.get(tipoBusqueda)) == buscar:
+          existencia = libro
+      if existencia:
+        print("Libro encontrado:\n ISBN: "+str(existencia.get("isbn"))+", Título: "+existencia.get("titulo")+", Autor: "+existencia.get("autor"))
+      else:
+        print("¡Libro no encontrado!\n")
+      continuar = input("Desea volver a consultar? Si/No: ").lower()
+    break
+  elif seleccion == '8':
+    libros = cargarLibros("libros.txt")
+    for libro in libros:
+      libro["numeroAutores"] = len(libro.get("autor").split(','))
+    cantidadConsulta = int(input("\nIngrese el número de autores: "))
+    for libro in libros:
+      if libro.get("numeroAutores") == cantidadConsulta:
+        print("Libro encontrado:\n ISBN: "+str(libro.get("isbn"))+", Título: "+libro.get("titulo")+", Autor: "+libro.get("autor"))    
+    break
+  elif seleccion == '9':
+    todosLibros()
+    editar = int(input("Introduzca el ID del libro a editar: "))
+    mensaje = f"""{'#'*30}
+¿Qué dato desea modificar?:
+a) ID.
+b) Título.
+c) Género.
+d) ISBN.
+e) Editorial.
+f) Autor.
+{'#'*30}
+Escriba su opción y presione enter: """
+    valorOpcion = {"a":"id", "b": "titulo", "c":"genero", "d":"isbn", "e": "editorial", "f": "autor"}
+    opcion = input(mensaje)
+    while opcion not in valorOpcion:
+      print("¡Valor incorrecto!\n vuelva a intentar: ")
+      opcion = input(mensaje)
+    editarValor = valorOpcion[opcion]
+    nuevoValor = input("Ingrese nuevo valor: ")
+    libros = cargarLibros("libros.txt")
+    for libro in libros:
+      if libro.get("id") == editar:
+        libro[editarValor] = nuevoValor
+      nuevaLineaTexto = Libro(libro["id"], libro["titulo"], libro["genero"], libro["isbn"], libro["editorial"], libro["autor"])
+      libroEditado = nuevaLineaTexto
+      if libro == libros[0]:
+        with open("libros.txt", "w") as libro_texto:
+          libro_texto.write(str(nuevaLineaTexto.libroAguardar()))
+      else:
+        with open("libros.txt", "a") as libro_texto:
+          libro_texto.write("\n"+str(nuevaLineaTexto.libroAguardar()))
+        
+    print("\nSe editó existosamente.")
+    libroEditado.listarLibro()
+    break
+  elif seleccion == '10':
+    archivo = str(input("Ingrese un nombre de archivo con su extensión: "))
+    libros = cargarLibros("libros.txt")
+    for libro in libros:
+      nuevaLineaTexto = Libro(libro["id"], libro["titulo"], libro["genero"], libro["isbn"], libro["editorial"], libro["autor"])
+      if libro == libros[0]:
+        with open(archivo, "w") as libro_texto:
+          libro_texto.write(str(nuevaLineaTexto.libroAguardar()))
+      else:
+        with open(archivo, "a") as libro_texto:
+          libro_texto.write("\n"+str(nuevaLineaTexto.libroAguardar()))
+    todosLibros()
+    print(f"\nSe guardaron los libros en el archivo {archivo}.")
+    break
+  else: 
+    print ("\n¡Opción incorrecta!\n")
